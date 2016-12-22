@@ -1,0 +1,42 @@
+INSERT INTO clients SET FirstName =?, LastName=?,"
+                    . "Gender=?, Address=?, DateOfBirth=?, "
+                    . "Password=?, ID=?, Email=?, Username=?, "
+                    . "Profession=?, AccessType='Active'";
+---------------------------------------------------------------------------------------------------------------------				
+					CREATE TABLE IF NOT EXISTS `XamTable`.`clients` ( 
+					`ID` VARCHAR(8) NOT NULL , 
+					`FirstName` VARCHAR(16) NOT NULL , 
+					`LastName` VARCHAR(16) NOT NULL , 
+					`Gender` VARCHAR(10) NOT NULL , 
+					`DateOfBirth` DATE NOT NULL , 
+					`Password` VARCHAR(32) NOT NULL , 
+					`Username` VARCHAR(16) NOT NULL , 
+					`Profession` VARCHAR(10) NOT NULL , 
+					`AccessType` VARCHAR(10) NOT NULL DEFAULT 'Active' , 
+					`Email` VARCHAR(200) NOT NULL 
+					PRIMARY KEY (`ID`), UNIQUE(`Username`), UNIQUE(`Email`))
+---------------------------------------------------------------------------------------------------------------------					
+					function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
+    $numbers = range($min, $max);
+    shuffle($numbers);
+    return array_slice($numbers, 0, $quantity);
+}
+-----------------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xamtable`.`courses` ( 
+`ID` SMALLINT(3) NOT NULL , 
+`Name` VARCHAR(50) NOT NULL , 
+`Code` VARCHAR(6) NOT NULL , 
+`Description` VARCHAR(256) NOT NULL, 
+PRIMARY KEY (`ID`), UNIQUE(`Name`), UNIQUE(`Code`))
+-----------------------------------------------------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Xamtable`.`enrolled_in` ( 
+`courseID` SMALLINT(3) NOT NULL , 
+`clientID` VARCHAR(8) NOT NULL ,
+`mark` SMALLINT(8) NOT NULL DEFAULT 0,  
+PRIMARY KEY (`clientID`,`courseID`),
+FOREIGN KEY(`clientID`) REFERENCES `clients`(ID) ON DELETE CASCADE, 
+FOREIGN KEY(`courseID`) REFERENCES `courses`(ID) ON DELETE CASCADE)
+-----------------------------------------------------------------------------------------------
+INSERT INTO `enrolled_in`(`courseID`, `clientID`) VALUES (1,'67bf0cdc')
+-----------------------------------------------------------------------------------------------
+INSERT INTO `courses`(`Name`, `Code`, `Description`) VALUES ('Test course 2','TST001','Description')
