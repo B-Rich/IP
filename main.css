@@ -1,90 +1,163 @@
-        tr:hover {background-color: #f5f5f5}
-        th {
-            display: table-cell;
-            padding: 8px;
-            font-family: "Arial";
-            background-color: black;
-            border-bottom: 1px solid gray;
-            color: white;
-        }
-        td {
-            display: table-cell;
-            padding: 8px;
-            font-family: "Arial";
-            border-bottom: 1px solid gray;
-        }
-        .button{
-            border: none;
-            display: inline-block;
-            outline: 0;
-            padding: 6px 16px;
-            vertical-align: middle;
-            overflow: hidden;
-            text-decoration: none;
-            color: white;
-            background-color: black;
-            text-align: center;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-		.button:hover {
-			background-color: green;
-		}
-		
-		.animated{
-			transition: background-color .10s,color .10s,box-shadow .10s,opacity .10s,filter .10s,border .10s;
-			transition-property: background-color, color, box-shadow, opacity, filter, border;
-			transition-duration: 0.10s, 0.10s, 0.10s, 0.10s, 0.10s, 0.10s;
-			transition-timing-function: initial, initial, initial, initial, initial, initial;
-			transition-delay: initial, initial, initial, initial, initial, initial;
-		}
-		.welcome{
-			float: right;
-			display: block;
-			color: white;
-			font-family: "Arial";
-			background-color: gray;
-			text-align: center;
-			padding: 14px 16px;
-		}
-		.welcome:hover {
-			background-color: black;
-		}
-		select {
-			border: none;
-			border-radius: 5px;
-			background-color: #eee;
-		}
-		input[type=text], input[type=password]{
-			margin: 10px 0;
-			box-sizing: border-box;
-			border: 2px solid #ccc;
-			transition: 0.5s;
-			outline: none;
-		}
+body{
+    background-color: #ADD8E6;
+    animation-name: change;
+    animation-duration: 100s;
+    animation-direction: reverse;
+    animation-iteration-count: infinite;
+    /*
+    #6D7B8D	Light Slate Gray
+    #657383	Slate Gray
+    #616D7E	Jet Gray
+    #646D7E	Mist Blue
+    #566D7E	Marble Blue
+    #737CA1	Slate Blue
+    #4863A0	Steel Blue
+    #2B547E	Blue Jay
+    #2B3856	Dark Slate Blue
+    #151B54	Midnight Blue 
+    */
 
-		input[type=text]:focus,input[type=password]:focus {
-			border: 2px solid #555;
-			width: 25%;
-		}
-		.markTTip {
-			position: relative;
-			display: inline-block;
-			border-bottom: 1px black;
-		}
-
-		.markTTip .markText {
-			visibility: hidden;
-			width: 100px;
-			background-color: black;
-			color: blue;
-			text-align: center;
-			padding: 5px 0;
-			border-radius: 5px;
-			position: absolute;
-			z-index: 1;
 }
 
-		.markTTip:hover .markText {
-			visibility: visible;
-		}
+@keyframes change{
+    0% {background-color: #646D7E};
+    12.5% {background-color: #566D7E};
+    25% {background-color: #737CA1};
+    37.5% {background-color: #4863A0};
+    50% {background-color: #2B547E};
+    62.5% {background-color: #2B3856};
+    75% {background-color: #151B54};
+    87.5% {background-color: #342D7E};
+    100% {background-color: #15317E};
+}
+
+tr:hover {background-color: #f5f5f5}
+th {
+    display: table-cell;
+    padding: 8px;
+    font-family: "Arial";
+    background-color: black;
+    border-bottom: 1px solid gray;
+    color: white;
+}
+td {
+    display: table-cell;
+    padding: 8px;
+    font-family: "Arial";
+    border-bottom: 1px solid gray;
+}
+.button{
+    border: none;
+    display: inline-block;
+    outline: 0;
+    padding: 6px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.button:hover {
+    background-color: green;
+}
+
+.animated{
+    transition: background-color .10s,color .10s,box-shadow .10s,opacity .10s,filter .10s,border .10s;
+    transition-property: background-color, color, box-shadow, opacity, filter, border;
+    transition-duration: 0.10s, 0.10s, 0.10s, 0.10s, 0.10s, 0.10s;
+    transition-timing-function: initial, initial, initial, initial, initial, initial;
+    transition-delay: initial, initial, initial, initial, initial, initial;
+}
+.welcome{
+    float: right;
+    display: block;
+    color: white;
+    font-family: "Arial";
+    background-color: gray;
+    text-align: center;
+    padding: 14px 16px;
+}
+.welcome:hover {
+    background-color: black;
+}
+select {
+    border: none;
+    border-radius: 5px;
+    background-color: #eee;
+}
+input[type=text], input[type=password]{
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    transition: 0.5s;
+    outline: none;
+}
+
+input[type=text]:focus,input[type=password]:focus {
+    border: 2px solid #555;
+    width: 25%;
+}
+.markTTip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px black;
+}
+
+.markTTip .markText {
+    visibility: hidden;
+    width: 100px;
+    background-color: black;
+    color: blue;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+}
+
+.markTTip:hover .markText {
+    visibility: visible;
+}
+
+.lbl{
+    /*background-image: url('tick.png');*/
+    background-image: url('check.png');
+}
+
+input[type=radio].chkbox{
+    position: absolute;
+    padding: 0px;
+    border: 0px;
+    width: 1px;
+    margin: -1px;
+    height: 1px;
+    overflow: hidden;
+    left: -1000px;
+    clip: rect(0 0 0 0);
+    z-index: -1000;
+}
+
+input[type=radio].chkbox + .lbl{
+    padding-left: 17px;
+    height: 12px;
+    display: inline-block;
+    line-height: 12px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 15px;
+    vertical-align: middle;
+    cursor:pointer
+}
+
+input[type=radio].chkbox:checked + .lbl{
+    background-position: 0 -12px;
+}
+
+.ansDiv{
+    background-color: green;
+    display: none;
+    animation: fadein 0.5s;
+}

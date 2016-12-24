@@ -50,8 +50,7 @@ function prepareQuestion($chosenQuest) {
         $potAns = explode(";", $questBuffer[1]);
         $potAnsOrd = randomizer();
         foreach ($potAnsOrd as &$ord)
-            echo "<input class='chkbox' type='radio' name='ans' id='$potAns[$ord]' value='$potAns[$ord]'>"
-                . "<label for = '$potAns[$ord]' class='lbl'> $potAns[$ord]</label><br><br>";
+            echo "<input type='radio' name='ans' value='$potAns[$ord]'>$potAns[$ord]<br>";
         $corrAns = $questBuffer[2];
         echo '<input class="button" type="submit" value="Submit"></fieldset></form></body></html>';
         return $corrAns;
@@ -68,12 +67,19 @@ $cAns = $_SESSION['corrAns'];
 if ($_SESSION['qNum'] < ($_SESSION['numOfQuest'] - 1)) {
     $chosenQuest = $qBank[$questOrd[$qNum]];
     $_SESSION['corrAns'] = prepareQuestion($chosenQuest);
-    echo "<div id='ansDiv' class='ansDiv'><p>Correct: ".$_SESSION['corrAns']."</p></div>";
+    echo "<div id='ansDiv' style='display: none;'><p>Correct: ".$_SESSION['corrAns']."</p></div>";
     echo '<br>Show answer<input id="showAns" type="checkbox" onclick="showAnswer2()">';
 }
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    echo $_POST['ans']." Hi";
+    /*if(isset($_POST['ans']) && checkJSON($_POST['ans'])){
+        echo True;
+        echo var_dump(pasreJSON("php://input"));
+    }*/
     if (isset($_POST['ans'])) {
         $chosenAnswer = $_POST['ans'];
+        /*echo "<div id='ansDiv' style='display: none;'><p>Correct: $cAns</p>";
+        echo "<p>Chosen: $chosenAnswer</p></div>";*/
         if ($chosenAnswer == $cAns) {
             echo "<p>Well done</p>";
             $_SESSION['corrAnsNum'] ++;

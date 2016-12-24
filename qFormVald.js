@@ -20,50 +20,93 @@ function checkQForm() {
         alert("Please choose the correct answer");
         cAF = false;
     }
-	alert("Question successfully added");
+    alert("Question successfully added");
     return cAF && cF && qF;
 }
 function checkQAForm() {
     var ans = document.forms["qaForm"]["ans"].value;
     if (ans == "") {
-		alert("Please choose an answer");
-		return false;
-	}
+        alert("Please choose an answer");
+        return false;
+    }
 }
 
 function showAnswer() {
-	var formInputs = document.forms[0];
-	var showAns = document.getElementById('showAns');
+    var formInputs = document.forms[0];
+    var showAns = document.getElementById('showAns');
     var ansDiv = document.getElementById('ansDiv');
     //if (ansDiv.style.display === 'none') {
-	if (showAns.checked) {
+    if (showAns.checked) {
         ansDiv.style.display = 'block';
-		for(var ii = 0; ii < formInputs.length; ii++){
-			formInputs[ii].disabled = true;
-		}
+        for (var ii = 0; ii < formInputs.length; ii++) {
+            formInputs[ii].disabled = true;
+        }
     } else {
         ansDiv.style.display = 'none';
     }
-	setTimeout(function(){
-	/*var ajax = new XMLHttpRequest();
-	ajax.open("POST","takeTest",true);
-	ajax.setRequestHeader("Content-type","application/json");
-	ajax.onreadystatechange = function(){
-		if(this.readystate == 4 && this.status == 200){
-		}
-	};
-	ajax.send()*/
-	document.getElementsByName("ans")[0].value = " ";
-	formInputs.submit();
-	},2000);
+    setTimeout(function () {
+        var ajax = new XMLHttpRequest();
+        ajax.open("POST", "takeTest", true);
+        ajax.setRequestHeader("Content-type", "application/json");
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var js = JSON.parse(this.responseText);
+                console.log(js.ans);
+                console.log("FUCK");
+            }
+        };
+        var JSON_DATA = JSON.stringify({"ans": "empty"});
+        console.log(JSON_DATA);
+        console.log("FUCK");
+        ajax.send(JSON_DATA);
+    }, 2000);
 }
 
-function loadFile(ans){
-	var ajax = new XMLHttpRequest();
-	ajax.open("GET","takeTest?corrAns="+ans,true);
-	ajax.send();
-	ajax.onreadystatechange = function(){
-		if(this.readystate == 4 && this.status == 200){
-		}
-	};
+function loadFile(ans) {
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "takeTest?corrAns=" + ans, true);
+    ajax.send();
+    ajax.onreadystatechange = function () {
+        if (this.readystate == 4 && this.status == 200) {
+            var js = JSON.parse(ajax.responseText);
+            console.log(js.ans);
+        }
+    };
+}
+
+function showAnswer2() {
+    var formInputs = document.forms[0];
+	var labels = document.getElementsByTagName('label');
+    var showAns = document.getElementById('showAns');
+    var ansDiv = document.getElementById('ansDiv');
+	var ansBuff = ansDiv.getElementsByTagName('p')[0].innerHTML;
+	var corrAns = ansBuff.replace('Correct: ','');
+	for (var ix = 0; ix < labels.length; ix++) {
+		   if(labels[ix].innerHTML.trim() == corrAns){
+			   labels[ix].style.color = 'green';
+			   labels[ix].style.fontWeight = 'bold';
+		   }else{
+			  labels[ix].style.color = 'red';
+		   }
+        }
+    if (showAns.checked) {
+        ansDiv.style.display = 'block';
+        for (var ii = 0; ii < formInputs.length; ii++) {
+            formInputs[ii].disabled = true;
+        }
+    } else {
+        ansDiv.style.display = 'none';
+    }
+    setTimeout(function () {
+        var ajax = new XMLHttpRequest();
+        ajax.open("POST", "takeTest", true);
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                //console.log(this.responseText);
+                document.body.innerHTML = this.responseText;
+            }
+        };
+        ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        ajax.send("ans=25");
+    }, 2000);
 }
