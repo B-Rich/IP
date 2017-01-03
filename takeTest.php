@@ -13,6 +13,8 @@ if (array_key_exists("user", $_SESSION)) {
 <?php
 
 echo "\n" . $_SESSION['clientID'] . " " . $_SESSION['courseID'];
+echo "\n" . 
+$timer = $_SESSION['maxTime'];
 $qBank = $_SESSION['qBank'];
 $questOrd = $_SESSION['questOrd'];
 $qNum = $_SESSION['qNum'];
@@ -45,7 +47,7 @@ function prepareQuestion($chosenQuest) {
         $quest = $questBuffer[0];
         echo '<!DOCTYPE HTML><html><head><script src="qFormVald.js"></script>'
         . '<script type="text/javascript" src="jquery-3.1.1.js"></script>'
-        . '<script type="text/javascript">window.onload=function(){xamTimer(10,$("#time"));}</script>'
+        . '<script type="text/javascript">window.onload=function(){xamTimer('.($_SESSION['maxTime']/60).',$("#time"));}</script>'
         . '<link href = "main.css" rel = "stylesheet" type = "text/css"></head><body>';
         echo '<canvas id="timercanvas" style="width: 0; height=0">None</canvas><div id = "time"> </div>';
         echo '<form name = "qaForm" action = "takeTest" onsubmit = "return checkQAForm()" method = "POST">'
@@ -76,6 +78,7 @@ if ($_SESSION['qNum'] < ($_SESSION['numOfQuest'] - 1)) {
     echo '<br>Show answer<input id = "showAns" type = "checkbox" onclick = "showAnswer2()">';
 }
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $_SESSION['maxTime'] -= time();
     if (isset($_POST['ans'])) {
         $chosenAnswer = $_POST['ans'];
         if ($chosenAnswer == $cAns) {

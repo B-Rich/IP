@@ -28,6 +28,7 @@ if ($_SERVER ['REQUEST_METHOD'] == "POST") {
         session_start();
         $_SESSION['user'] = $_POST['user'];
         $_SESSION['userNm'] = DataBase::getInstance()->getClientID($_POST['user'],TRUE);
+        $_SESSION['clientType'] = DataBase::getInstance()->getClientType($_POST['user']);
         header('Location: home');
         exit;
     } else {

@@ -161,6 +161,19 @@ class DataBase extends mysqli {
             echo "<script>alert('Error!')</script>";
         }
     }
+    
+    public function getClientType($sessionUser) {
+        $Type = $this->query(
+                "SELECT Profession FROM clients WHERE "
+                . "Username ='" . $sessionUser . "' OR "
+                . "Email ='" . $sessionUser . "'");
+        if ($Type->num_rows > 0) {
+            $trgtTuple = $Type->fetch_row();
+            return $trgtTuple[0];
+        } else
+        //return "Not found"; 
+            return "Error";
+    }
 
     public function getCourses() {
         return $this->query("SELECT * FROM `courses`");

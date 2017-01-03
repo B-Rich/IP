@@ -28,13 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($_POST['goto'] == 'takeTest') {
             echo True;
             require_once ("DB/DataBase.php");
-            $qFileName = ".\Questions\questions" . $_SESSION['crsCode'] . ".qbf";
+            $qFileName = ".\Questions\questions" . $_SESSION['courseID'] . ".qbf";
             $qBankBuffer = fopen($qFileName, "rw") or die("Unable to open file!");
             $_SESSION['qBank'] = preg_split('/$\R?^/m', fread($qBankBuffer, filesize($qFileName)));
             $_SESSION['numOfQuest'] = sizeof($_SESSION['qBank']);
             $_SESSION['questOrd'] = DataBase::randomizer(0, $_SESSION['numOfQuest'] - 1, $_SESSION['numOfQuest'] - 1);
             $_SESSION['qNum'] = 0;
             $_SESSION['corrAnsNum'] = 0;
+            $_SESSION['maxTime'] = time()+3600;
             header('Location: takeTest');
         }
     }
@@ -93,7 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             <input type ='submit' class='button' value ='Enrolled Students'/>
                         </form>";
                 } else {
-                    echo "<form name ='Remove Course' action ='removeCourse' method='POST'>                    
+                    echo "<form name ='Remove Course' action ='removeCourse' method='POST'>   
+                    <input type ='hidden' name ='crsID' value ='$crsID'>     
                     <input type ='hidden' name ='courseID' value ='$crsCode'/>
                     <input type ='hidden' name ='clientID' value ='$clntID'/>
                     <input type ='hidden' name ='goto' value ='removeCourse'>

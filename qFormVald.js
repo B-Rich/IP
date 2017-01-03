@@ -112,10 +112,7 @@ function showAnswer2() {
 }
 
 function xamTimer(period, time) {
-    var c = document.getElementById("timercanvas");
-    var ctx = c.getContext("2d");
-    ctx.restore()
-    console.log('xamTimer')
+    console.log('xamTimer');
     if (!isNaN(period)) {
         var timer = period, mins, sec;
         var interVal = setInterval(function () {
@@ -123,34 +120,12 @@ function xamTimer(period, time) {
             sec = parseInt(timer % 60, 10);
             mins = mins < 10 ? "0" + mins : mins;
             sec = sec < 10 ? "0" + sec : sec;
-            ctx.fillText(time, 15, 50);
             $(time).html(mins + "m : " + sec + "s");
             if (--timer < 0) {
                 timer = period;
                 $("#time").empty();
                 clearInterval(interVal)
-                SubmitFunction();
             }
         }, 1000);
     }
-}
-function saveTimer() {
-    ctx.save();
-    console.log('Saved');
-}
-
-
-function SubmitFunction() {
-    saveTimer();
-    $("form").submit();
-    /*var ajax = new XMLHttpRequest();
-     ajax.open("POST", "takeTest", true);
-     ajax.onreadystatechange = function () {
-     if (this.readyState == 4 && this.status == 200) {
-     //console.log(this.responseText);
-     document.body.innerHTML = this.responseText;
-     }
-     };
-     ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-     ajax.send("ans=25");*/
 }
