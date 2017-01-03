@@ -76,19 +76,19 @@ function loadFile(ans) {
 
 function showAnswer2() {
     var formInputs = document.forms[0];
-	var labels = document.getElementsByTagName('label');
+    var labels = document.getElementsByTagName('label');
     var showAns = document.getElementById('showAns');
     var ansDiv = document.getElementById('ansDiv');
-	var ansBuff = ansDiv.getElementsByTagName('p')[0].innerHTML;
-	var corrAns = ansBuff.replace('Correct: ','');
-	for (var ix = 0; ix < labels.length; ix++) {
-		   if(labels[ix].innerHTML.trim() == corrAns){
-			   labels[ix].style.color = 'green';
-			   labels[ix].style.fontWeight = 'bold';
-		   }else{
-			  labels[ix].style.color = 'red';
-		   }
+    var ansBuff = ansDiv.getElementsByTagName('p')[0].innerHTML;
+    var corrAns = ansBuff.replace('Correct: ', '');
+    for (var ix = 0; ix < labels.length; ix++) {
+        if (labels[ix].innerHTML.trim() == corrAns) {
+            labels[ix].style.color = 'green';
+            labels[ix].style.fontWeight = 'bold';
+        } else {
+            labels[ix].style.color = 'red';
         }
+    }
     if (showAns.checked) {
         ansDiv.style.display = 'block';
         for (var ii = 0; ii < formInputs.length; ii++) {
@@ -109,4 +109,48 @@ function showAnswer2() {
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         ajax.send("ans=25");
     }, 2000);
+}
+
+function xamTimer(period, time) {
+    var c = document.getElementById("timercanvas");
+    var ctx = c.getContext("2d");
+    ctx.restore()
+    console.log('xamTimer')
+    if (!isNaN(period)) {
+        var timer = period, mins, sec;
+        var interVal = setInterval(function () {
+            mins = parseInt(timer / 60, 10);
+            sec = parseInt(timer % 60, 10);
+            mins = mins < 10 ? "0" + mins : mins;
+            sec = sec < 10 ? "0" + sec : sec;
+            ctx.fillText(time, 15, 50);
+            $(time).html(mins + "m : " + sec + "s");
+            if (--timer < 0) {
+                timer = period;
+                $("#time").empty();
+                clearInterval(interVal)
+                SubmitFunction();
+            }
+        }, 1000);
+    }
+}
+function saveTimer() {
+    ctx.save();
+    console.log('Saved');
+}
+
+
+function SubmitFunction() {
+    saveTimer();
+    $("form").submit();
+    /*var ajax = new XMLHttpRequest();
+     ajax.open("POST", "takeTest", true);
+     ajax.onreadystatechange = function () {
+     if (this.readyState == 4 && this.status == 200) {
+     //console.log(this.responseText);
+     document.body.innerHTML = this.responseText;
+     }
+     };
+     ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+     ajax.send("ans=25");*/
 }
