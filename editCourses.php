@@ -35,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $_SESSION['questOrd'] = DataBase::randomizer(0, $_SESSION['numOfQuest'] - 1, $_SESSION['numOfQuest'] - 1);
             $_SESSION['qNum'] = 0;
             $_SESSION['corrAnsNum'] = 0;
-            $_SESSION['maxTime'] = time()+3600;
+            $_SESSION['counter'] = 3600;
+            $_SESSION['prev'] = time();
             header('Location: takeTest');
         }
     }
