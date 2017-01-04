@@ -33,11 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $_SESSION['qBank'] = preg_split('/$\R?^/m', fread($qBankBuffer, filesize($qFileName)));
             $_SESSION['numOfQuest'] = sizeof($_SESSION['qBank']);
             $_SESSION['questOrd'] = DataBase::randomizer(0, $_SESSION['numOfQuest'] - 1, $_SESSION['numOfQuest'] - 1);
-            $_SESSION['qNum'] = 0;
+            $_SESSION['qNum'] = -1;
             $_SESSION['corrAnsNum'] = 0;
-            $_SESSION['counter'] = 3600;
+            $_SESSION['counter'] = 900;
             $_SESSION['prev'] = time();
+            $_SESSION['mark'] = null;
             header('Location: takeTest');
+            exit;
         }
     }
 }

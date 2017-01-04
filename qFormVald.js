@@ -52,12 +52,12 @@ function showAnswer() {
             if (this.readyState == 4 && this.status == 200) {
                 var js = JSON.parse(this.responseText);
                 console.log(js.ans);
-                console.log("FUCK");
+                console.log("STUCK");
             }
         };
         var JSON_DATA = JSON.stringify({"ans": "empty"});
         console.log(JSON_DATA);
-        console.log("FUCK");
+        console.log("STUCK");
         ajax.send(JSON_DATA);
     }, 2000);
 }
@@ -107,25 +107,42 @@ function showAnswer2() {
             }
         };
         ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        ajax.send("ans=25");
+        ajax.send("ans=SKIPPED");
     }, 2000);
 }
 
 function xamTimer(period, time) {
     console.log('xamTimer');
     if (!isNaN(period)) {
-        var timer = period, mins, sec;
+        var timer = period;//, mins, sec;
+        console.log(period)
         var interVal = setInterval(function () {
-            mins = parseInt(timer / 60, 10);
-            sec = parseInt(timer % 60, 10);
+            //console.log(period)
+            var mins = parseInt(timer / 60, 10);
+            var sec = parseInt(timer % 60, 10);
             mins = mins < 10 ? "0" + mins : mins;
             sec = sec < 10 ? "0" + sec : sec;
+            $("#time").css("visibility","visible");
             $(time).html(mins + "m : " + sec + "s");
             if (--timer < 0) {
                 timer = period;
                 $("#time").empty();
                 clearInterval(interVal)
+                outOfTime();
             }
         }, 1000);
     }
+}
+
+function outOfTime(){
+    var ajax = new XMLHttpRequest();
+        ajax.open("POST", "takeTest", true);
+        ajax.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                //console.log(this.responseText);
+                document.body.innerHTML = this.responseText;
+            }
+        };
+        ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        ajax.send("ans=DEADTIME");
 }

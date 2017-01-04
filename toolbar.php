@@ -43,11 +43,16 @@
             <li><a class="animated" href="home">Home</a></li>
             <?php
             if ($_SESSION['clientType'] == 'STDT') {
-                echo '<li><a class="animated" href="courseList">Courses</a></li>';
+                echo '<li><a class="animated" href="courseList">View Courses</a></li>';
             }
             ?>
-            <li><a class="animated" href="editCourses">View Courses</a></li>
+            <li><a class="animated" href="editCourses">Manage Courses</a></li>
             <li><a class="animated" href="logout">Logout</a></li>
+            <?php if(isset($_SESSION['mark'])){
+                echo '<li><a class="animated" href="#">'
+                . 'You have have scored ' . $_SESSION['mark'] . ' out of 100 on your last test.'
+                        . '</a></li>';
+            }?>
         </ul>
         <br>
     </body>

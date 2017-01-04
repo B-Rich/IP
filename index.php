@@ -48,8 +48,8 @@ if ($_SERVER ['REQUEST_METHOD'] == "POST") {
         <center><h1>Welcome to Meshos Online Testing Service </h1></center>
     </form>
     <h2>Still not a part of the community?</h2><a href="signUp"><h3>Enroll yourself today!</h3></a>
-    <form name="logon" action="index" method="POST" >
-        <fieldset>
+    <form class ="form" name="logon" action="index" method="POST" >
+        <fieldset class="fs_border">
         <legend>Enter your login information:</legend>
         Username or E-mail:
         <input type="text" name="user"/><br><br>

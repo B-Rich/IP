@@ -12,9 +12,8 @@ if (array_key_exists("user", $_SESSION)) {
 ?>
 <?php
 
-echo "\n" . $_SESSION['clientID'] . " " . $_SESSION['courseID'];
-echo "\n" . 
-$timer = $_SESSION['maxTime'];
+include("toolbar.php");
+echo "\n" . $_SESSION['courseID'];
 $qBank = $_SESSION['qBank'];
 $questOrd = $_SESSION['questOrd'];
 $qNum = $_SESSION['qNum'];
@@ -47,11 +46,11 @@ function prepareQuestion($chosenQuest) {
         $quest = $questBuffer[0];
         echo '<!DOCTYPE HTML><html><head><script src="qFormVald.js"></script>'
         . '<script type="text/javascript" src="jquery-3.1.1.js"></script>'
-        . '<script type="text/javascript">window.onload=function(){xamTimer('.($_SESSION['counter']/60).',$("#time"));}</script>'
+        . '<script type="text/javascript">window.onload=function(){xamTimer(' . ($_SESSION['counter']) . ',$("#time"));}</script>'
         . '<link href = "main.css" rel = "stylesheet" type = "text/css"></head><body>';
-        echo '<canvas id="timercanvas" style="width: 0; height=0">None</canvas><div id = "time"> </div>';
-        echo '<form name = "qaForm" action = "takeTest" onsubmit = "return checkQAForm()" method = "POST">'
-        . '<fieldset><legend>Choose the correct answer:</legend>';
+        echo '<div id = "time" style="visibility: hidden">Timer</div>';
+        echo '<form class="form" name = "qaForm" action = "takeTest" onsubmit = "return checkQAForm()" method = "POST">'
+        . '<fieldset class="fs_border"><legend>Choose the correct answer:</legend>';
         echo "<h1>$quest</h1>";
         $potAns = explode(";", $questBuffer[1]);
         $potAnsOrd = randomizer();
@@ -66,15 +65,13 @@ function prepareQuestion($chosenQuest) {
     }
 }
 
-//session_start();
-echo "<title>Question " . ($qNum + 1) . " out " . $_SESSION['numOfQuest'] . "</title>";
-echo "<br> Question " . ($qNum + 1) . " out " . $_SESSION['numOfQuest'];
-//echo $_SESSION['numOfQuest'];
+echo "<title>Question " . ($_SESSION['qNum'] + 2) . " out " . $_SESSION['numOfQuest'] . "</title>";
+echo "<br> Question " . ($_SESSION['qNum'] + 2) . " out " . $_SESSION['numOfQuest'];
 $cAns = $_SESSION['corrAns'];
-if ($_SESSION['qNum'] < ($_SESSION['numOfQuest'] - 1)) {
-    $chosenQuest = $qBank[$questOrd[$qNum]];
+if (++$_SESSION['qNum'] < ($_SESSION['numOfQuest'] - 1)) {
+    $chosenQuest = $qBank[$questOrd[$_SESSION['qNum']]];
     $_SESSION['corrAns'] = prepareQuestion($chosenQuest);
-    echo "<div id='ansDiv' class='ansDiv'><p>Correct: " . $_SESSION['corrAns'] . "</p></div>";
+    echo "<br><div id='ansDiv' class='ansDiv'><p>Correct: " . $_SESSION['corrAns'] . "</p></div>";
     echo '<br>Show answer<input id = "showAns" type = "checkbox" onclick = "showAnswer2()">';
 }
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -89,16 +86,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         } else {
             echo "<p>Incorrect</p>";
         }
-        if ($_SESSION['qNum'] < ($_SESSION['numOfQuest'] - 1)) {
-            $_SESSION['qNum'] ++;
-        } else {
+        if ((($_SESSION['qNum'] + 1) >= ($_SESSION['numOfQuest'])) || $_POST['ans'] == 'DEADTIME') {
             $corrAnsNum = $_SESSION['corrAnsNum'];
-            $numOfQuest = $_SESSION['numOfQuest'];
+            $numOfQuest = $_SESSION['numOfQuest'] - 1;
             $mark = ($corrAnsNum / $numOfQuest) * 100;
             require_once("DB/DataBase.php");
+            $_SESSION['mark'] = $mark;
             DataBase::getInstance()->updateMark($_SESSION['crsID'], $_SESSION['clientID'], $mark);
             echo "<script>alert('You have $corrAnsNum correct answers out of $numOfQuest.'); "
             . "location.href='editCourses'</script>";
+            if ($_POST['ans'] == 'DEADTIME') {
+                header('Location: /IP/editCourses');
+                exit;
+            }
         }
     }
 }

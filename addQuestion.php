@@ -45,14 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <!DOCTYPE html>
 <html>
     <head>
-        <!--script type="text/javascript" src="qFormVald.js"></script>-->
         <script src="qFormVald.js"></script>
-        <link href="main.css" rel="stylesheet" type="text/css">
+        <link href = "main.css" rel = "stylesheet" type = "text/css">
         <title><?php echo "" . $_SESSION['crsCode'] . ":  " . $_SESSION['crsName'] . " add question";?></title>
     </head>
     <body>
-        <form name="qForm" action="addQuestion" onsubmit="return checkQForm()" method="POST">
-            <fieldset>
+        <form class="form" name="qForm" action="addQuestion" onsubmit="return checkQForm()" method="POST">
+            <fieldset class="fs_border">
                 <legend>Add new question:</legend>
                 Question:<br>
                 <input type="text" name="question" placeholder="e.g. What is 2 power 2"><br>
@@ -71,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <input class="button" type="submit" value="Submit">
             </fieldset>
         </form>
+        <br><br>
         <a href="editCourses"><button class="button">Back</button></a>
     </body>
 </html>
